@@ -1,0 +1,27 @@
+# Virtual environment — never commit
+venv/
+.venv/
+env/
+*.egg-info/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs and local output
+logs/
+benchmarks/results/
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# AWS credentials — never commit
+.aws/
+credentials

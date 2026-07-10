@@ -1,0 +1,306 @@
+[
+  {
+    "name": "Dublin",
+    "latitude": 53.33306,
+    "longitude": -6.24889,
+    "timezone": "Europe/Dublin",
+    "continent": "Europe",
+    "country": "Ireland"
+  },
+  {
+    "name": "London",
+    "latitude": 51.50853,
+    "longitude": -0.12574,
+    "timezone": "Europe/London",
+    "continent": "Europe",
+    "country": "United Kingdom"
+  },
+  {
+    "name": "Paris",
+    "latitude": 48.85341,
+    "longitude": 2.3488,
+    "timezone": "Europe/Paris",
+    "continent": "Europe",
+    "country": "France"
+  },
+  {
+    "name": "Berlin",
+    "latitude": 52.52437,
+    "longitude": 13.41053,
+    "timezone": "Europe/Berlin",
+    "continent": "Europe",
+    "country": "Germany"
+  },
+  {
+    "name": "Madrid",
+    "latitude": 40.4165,
+    "longitude": -3.70256,
+    "timezone": "Europe/Madrid",
+    "continent": "Europe",
+    "country": "Spain"
+  },
+  {
+    "name": "Rome",
+    "latitude": 41.89193,
+    "longitude": 12.51133,
+    "timezone": "Europe/Rome",
+    "continent": "Europe",
+    "country": "Italy"
+  },
+  {
+    "name": "Amsterdam",
+    "latitude": 52.37403,
+    "longitude": 4.88969,
+    "timezone": "Europe/Amsterdam",
+    "continent": "Europe",
+    "country": "The Netherlands"
+  },
+  {
+    "name": "Vienna",
+    "latitude": 48.20849,
+    "longitude": 16.37208,
+    "timezone": "Europe/Vienna",
+    "continent": "Europe",
+    "country": "Austria"
+  },
+  {
+    "name": "Warsaw",
+    "latitude": 52.22977,
+    "longitude": 21.01178,
+    "timezone": "Europe/Warsaw",
+    "continent": "Europe",
+    "country": "Poland"
+  },
+  {
+    "name": "Moscow",
+    "latitude": 55.75204,
+    "longitude": 37.61781,
+    "timezone": "Europe/Moscow",
+    "continent": "Europe",
+    "country": "Russia"
+  },
+  {
+    "name": "Istanbul",
+    "latitude": 41.01384,
+    "longitude": 28.94966,
+    "timezone": "Europe/Istanbul",
+    "continent": "Europe",
+    "country": "Republic of T\u00fcrkiye"
+  },
+  {
+    "name": "New York",
+    "latitude": 40.71427,
+    "longitude": -74.00597,
+    "timezone": "America/New_York",
+    "continent": "North America",
+    "country": "United States"
+  },
+  {
+    "name": "Los Angeles",
+    "latitude": 34.05223,
+    "longitude": -118.24368,
+    "timezone": "America/Los_Angeles",
+    "continent": "North America",
+    "country": "United States"
+  },
+  {
+    "name": "Chicago",
+    "latitude": 41.85003,
+    "longitude": -87.65005,
+    "timezone": "America/Chicago",
+    "continent": "North America",
+    "country": "United States"
+  },
+  {
+    "name": "Toronto",
+    "latitude": 43.70643,
+    "longitude": -79.39864,
+    "timezone": "America/Toronto",
+    "continent": "North America",
+    "country": "Canada"
+  },
+  {
+    "name": "Mexico City",
+    "latitude": 19.42847,
+    "longitude": -99.12766,
+    "timezone": "America/Mexico_City",
+    "continent": "North America",
+    "country": "Mexico"
+  },
+  {
+    "name": "Miami",
+    "latitude": 25.77427,
+    "longitude": -80.19366,
+    "timezone": "America/New_York",
+    "continent": "North America",
+    "country": "United States"
+  },
+  {
+    "name": "Sao Paulo",
+    "latitude": -23.5475,
+    "longitude": -46.63611,
+    "timezone": "America/Sao_Paulo",
+    "continent": "South America",
+    "country": "Brazil"
+  },
+  {
+    "name": "Buenos Aires",
+    "latitude": -34.61315,
+    "longitude": -58.37723,
+    "timezone": "America/Argentina/Buenos_Aires",
+    "continent": "South America",
+    "country": "Argentina"
+  },
+  {
+    "name": "Lima",
+    "latitude": -12.04318,
+    "longitude": -77.02824,
+    "timezone": "America/Lima",
+    "continent": "South America",
+    "country": "Peru"
+  },
+  {
+    "name": "Mumbai",
+    "latitude": 19.07283,
+    "longitude": 72.88261,
+    "timezone": "Asia/Kolkata",
+    "continent": "Asia",
+    "country": "India"
+  },
+  {
+    "name": "Delhi",
+    "latitude": 28.65195,
+    "longitude": 77.23149,
+    "timezone": "Asia/Kolkata",
+    "continent": "Asia",
+    "country": "India"
+  },
+  {
+    "name": "Tokyo",
+    "latitude": 35.6895,
+    "longitude": 139.69171,
+    "timezone": "Asia/Tokyo",
+    "continent": "Asia",
+    "country": "Japan"
+  },
+  {
+    "name": "Beijing",
+    "latitude": 39.9075,
+    "longitude": 116.39723,
+    "timezone": "Asia/Shanghai",
+    "continent": "Asia",
+    "country": "China"
+  },
+  {
+    "name": "Singapore",
+    "latitude": 1.28967,
+    "longitude": 103.85007,
+    "timezone": "Asia/Singapore",
+    "continent": "Asia",
+    "country": "Singapore"
+  },
+  {
+    "name": "Dubai",
+    "latitude": 25.07725,
+    "longitude": 55.30927,
+    "timezone": "Asia/Dubai",
+    "continent": "Asia",
+    "country": "United Arab Emirates"
+  },
+  {
+    "name": "Seoul",
+    "latitude": 37.566,
+    "longitude": 126.9784,
+    "timezone": "Asia/Seoul",
+    "continent": "Asia",
+    "country": "South Korea"
+  },
+  {
+    "name": "Bangkok",
+    "latitude": 13.75398,
+    "longitude": 100.50144,
+    "timezone": "Asia/Bangkok",
+    "continent": "Asia",
+    "country": "Thailand"
+  },
+  {
+    "name": "Karachi",
+    "latitude": 24.8608,
+    "longitude": 67.0104,
+    "timezone": "Asia/Karachi",
+    "continent": "Asia",
+    "country": "Pakistan"
+  },
+  {
+    "name": "Riyadh",
+    "latitude": 24.68773,
+    "longitude": 46.72185,
+    "timezone": "Asia/Riyadh",
+    "continent": "Asia",
+    "country": "Saudi Arabia"
+  },
+  {
+    "name": "Cairo",
+    "latitude": 30.06263,
+    "longitude": 31.24967,
+    "timezone": "Africa/Cairo",
+    "continent": "Africa",
+    "country": "Egypt"
+  },
+  {
+    "name": "Lagos",
+    "latitude": 6.45407,
+    "longitude": 3.39467,
+    "timezone": "Africa/Lagos",
+    "continent": "Africa",
+    "country": "Nigeria"
+  },
+  {
+    "name": "Nairobi",
+    "latitude": -1.28333,
+    "longitude": 36.81667,
+    "timezone": "Africa/Nairobi",
+    "continent": "Africa",
+    "country": "Kenya"
+  },
+  {
+    "name": "Johannesburg",
+    "latitude": -26.20227,
+    "longitude": 28.04363,
+    "timezone": "Africa/Johannesburg",
+    "continent": "Africa",
+    "country": "South Africa"
+  },
+  {
+    "name": "Casablanca",
+    "latitude": 33.58831,
+    "longitude": -7.61138,
+    "timezone": "Africa/Casablanca",
+    "continent": "Africa",
+    "country": "Morocco"
+  },
+  {
+    "name": "Sydney",
+    "latitude": -33.86785,
+    "longitude": 151.20732,
+    "timezone": "Australia/Sydney",
+    "continent": "Oceania",
+    "country": "Australia"
+  },
+  {
+    "name": "Melbourne",
+    "latitude": -37.814,
+    "longitude": 144.96332,
+    "timezone": "Australia/Melbourne",
+    "continent": "Oceania",
+    "country": "Australia"
+  },
+  {
+    "name": "Auckland",
+    "latitude": -36.84853,
+    "longitude": 174.76349,
+    "timezone": "Pacific/Auckland",
+    "continent": "Oceania",
+    "country": "New Zealand"
+  }
+]
