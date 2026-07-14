@@ -16,7 +16,7 @@ Z_SCORE_THRESHOLD = 3.0
 
 
 def get_baseline(city_name, hour_of_day):
-    """Fetch mean/stddev for a city + hour from DynamoDB weather_baselines."""
+    #Fetch mean/stddev for a city + hour from DynamoDB weather_baselines.
     try:
         response = BASELINES_TABLE.get_item(
             Key={
@@ -31,7 +31,7 @@ def get_baseline(city_name, hour_of_day):
 
 
 def calculate_z_score(current_value, mean, stddev):
-    """z = (current - mean) / stddev. Returns None if stddev is 0 or invalid."""
+    #z = (current - mean) / stddev. Returns None if stddev is 0 or invalid.
     try:
         mean = float(mean)
         stddev = float(stddev)
@@ -43,7 +43,7 @@ def calculate_z_score(current_value, mean, stddev):
 
 
 def write_alert(city_name, timestamp, z_score, current_temp, metric='temperature_2m'):
-    """Write an anomaly alert to DynamoDB weather_alerts."""
+    #Write an anomaly alert to DynamoDB weather_alerts.
     try:
         ALERTS_TABLE.put_item(
             Item={
@@ -61,7 +61,7 @@ def write_alert(city_name, timestamp, z_score, current_temp, metric='temperature
 
 
 def process_record(record_data):
-    """Process a single decoded weather record from Kinesis."""
+    #Process a single decoded weather record from Kinesis.
     try:
         city_name = record_data['city_name']
         current_temp = record_data['temperature_2m']
@@ -93,10 +93,8 @@ def process_record(record_data):
 
 
 def lambda_handler(event, context):
-    """
-    Entry point. Triggered by Kinesis with batch_size=100, batch_window=300s
-    (the 5-minute sliding window).
-    """
+
+    #Entry point. Triggered by Kinesis with batch_size=100, batch_window=300s (the 5-minute sliding window).
     records = event.get('Records', [])
     logger.info(f"Received {len(records)} records from Kinesis")
 
