@@ -1,40 +1,802 @@
 [
-  {"name": "Dublin",       "tz": "Europe/Dublin",                  "continent": "Europe"},
-  {"name": "London",       "tz": "Europe/London",                  "continent": "Europe"},
-  {"name": "Paris",        "tz": "Europe/Paris",                   "continent": "Europe"},
-  {"name": "Berlin",       "tz": "Europe/Berlin",                  "continent": "Europe"},
-  {"name": "Madrid",       "tz": "Europe/Madrid",                  "continent": "Europe"},
-  {"name": "Rome",         "tz": "Europe/Rome",                    "continent": "Europe"},
-  {"name": "Amsterdam",    "tz": "Europe/Amsterdam",               "continent": "Europe"},
-  {"name": "Vienna",       "tz": "Europe/Vienna",                  "continent": "Europe"},
-  {"name": "Warsaw",       "tz": "Europe/Warsaw",                  "continent": "Europe"},
-  {"name": "Moscow",       "tz": "Europe/Moscow",                  "continent": "Europe"},
-  {"name": "Istanbul",     "tz": "Europe/Istanbul",                "continent": "Europe"},
-  {"name": "New York",     "tz": "America/New_York",               "continent": "North America"},
-  {"name": "Los Angeles",  "tz": "America/Los_Angeles",            "continent": "North America"},
-  {"name": "Chicago",      "tz": "America/Chicago",                "continent": "North America"},
-  {"name": "Toronto",      "tz": "America/Toronto",                "continent": "North America"},
-  {"name": "Mexico City",  "tz": "America/Mexico_City",            "continent": "North America"},
-  {"name": "Miami",        "tz": "America/New_York",               "continent": "North America"},
-  {"name": "Sao Paulo",    "tz": "America/Sao_Paulo",              "continent": "South America"},
-  {"name": "Buenos Aires", "tz": "America/Argentina/Buenos_Aires", "continent": "South America"},
-  {"name": "Lima",         "tz": "America/Lima",                   "continent": "South America"},
-  {"name": "Mumbai",       "tz": "Asia/Kolkata",                   "continent": "Asia"},
-  {"name": "Delhi",        "tz": "Asia/Kolkata",                   "continent": "Asia"},
-  {"name": "Tokyo",        "tz": "Asia/Tokyo",                     "continent": "Asia"},
-  {"name": "Beijing",      "tz": "Asia/Shanghai",                  "continent": "Asia"},
-  {"name": "Singapore",    "tz": "Asia/Singapore",                 "continent": "Asia"},
-  {"name": "Dubai",        "tz": "Asia/Dubai",                     "continent": "Asia"},
-  {"name": "Seoul",        "tz": "Asia/Seoul",                     "continent": "Asia"},
-  {"name": "Bangkok",      "tz": "Asia/Bangkok",                   "continent": "Asia"},
-  {"name": "Karachi",      "tz": "Asia/Karachi",                   "continent": "Asia"},
-  {"name": "Riyadh",       "tz": "Asia/Riyadh",                    "continent": "Asia"},
-  {"name": "Cairo",        "tz": "Africa/Cairo",                   "continent": "Africa"},
-  {"name": "Lagos",        "tz": "Africa/Lagos",                   "continent": "Africa"},
-  {"name": "Nairobi",      "tz": "Africa/Nairobi",                 "continent": "Africa"},
-  {"name": "Johannesburg", "tz": "Africa/Johannesburg",            "continent": "Africa"},
-  {"name": "Casablanca",   "tz": "Africa/Casablanca",              "continent": "Africa"},
-  {"name": "Sydney",       "tz": "Australia/Sydney",               "continent": "Oceania"},
-  {"name": "Melbourne",    "tz": "Australia/Melbourne",            "continent": "Oceania"},
-  {"name": "Auckland",     "tz": "Pacific/Auckland",               "continent": "Oceania"}
+  {
+    "name": "Dublin",
+    "tz": "Europe/Dublin",
+    "continent": "Europe"
+  },
+  {
+    "name": "London",
+    "tz": "Europe/London",
+    "continent": "Europe"
+  },
+  {
+    "name": "Paris",
+    "tz": "Europe/Paris",
+    "continent": "Europe"
+  },
+  {
+    "name": "Berlin",
+    "tz": "Europe/Berlin",
+    "continent": "Europe"
+  },
+  {
+    "name": "Madrid",
+    "tz": "Europe/Madrid",
+    "continent": "Europe"
+  },
+  {
+    "name": "Rome",
+    "tz": "Europe/Rome",
+    "continent": "Europe"
+  },
+  {
+    "name": "Amsterdam",
+    "tz": "Europe/Amsterdam",
+    "continent": "Europe"
+  },
+  {
+    "name": "Vienna",
+    "tz": "Europe/Vienna",
+    "continent": "Europe"
+  },
+  {
+    "name": "Warsaw",
+    "tz": "Europe/Warsaw",
+    "continent": "Europe"
+  },
+  {
+    "name": "Moscow",
+    "tz": "Europe/Moscow",
+    "continent": "Europe"
+  },
+  {
+    "name": "Istanbul",
+    "tz": "Europe/Istanbul",
+    "continent": "Europe"
+  },
+  {
+    "name": "Zurich",
+    "tz": "Europe/Zurich",
+    "continent": "Europe"
+  },
+  {
+    "name": "Prague",
+    "tz": "Europe/Prague",
+    "continent": "Europe"
+  },
+  {
+    "name": "Budapest",
+    "tz": "Europe/Budapest",
+    "continent": "Europe"
+  },
+  {
+    "name": "Bucharest",
+    "tz": "Europe/Bucharest",
+    "continent": "Europe"
+  },
+  {
+    "name": "Stockholm",
+    "tz": "Europe/Stockholm",
+    "continent": "Europe"
+  },
+  {
+    "name": "Oslo",
+    "tz": "Europe/Oslo",
+    "continent": "Europe"
+  },
+  {
+    "name": "Copenhagen",
+    "tz": "Europe/Copenhagen",
+    "continent": "Europe"
+  },
+  {
+    "name": "Helsinki",
+    "tz": "Europe/Helsinki",
+    "continent": "Europe"
+  },
+  {
+    "name": "Athens",
+    "tz": "Europe/Athens",
+    "continent": "Europe"
+  },
+  {
+    "name": "Lisbon",
+    "tz": "Europe/Lisbon",
+    "continent": "Europe"
+  },
+  {
+    "name": "Brussels",
+    "tz": "Europe/Brussels",
+    "continent": "Europe"
+  },
+  {
+    "name": "Kyiv",
+    "tz": "Europe/Kiev",
+    "continent": "Europe"
+  },
+  {
+    "name": "Belgrade",
+    "tz": "Europe/Belgrade",
+    "continent": "Europe"
+  },
+  {
+    "name": "Zagreb",
+    "tz": "Europe/Zagreb",
+    "continent": "Europe"
+  },
+  {
+    "name": "Sofia",
+    "tz": "Europe/Sofia",
+    "continent": "Europe"
+  },
+  {
+    "name": "Vilnius",
+    "tz": "Europe/Vilnius",
+    "continent": "Europe"
+  },
+  {
+    "name": "Riga",
+    "tz": "Europe/Riga",
+    "continent": "Europe"
+  },
+  {
+    "name": "Tallinn",
+    "tz": "Europe/Tallinn",
+    "continent": "Europe"
+  },
+  {
+    "name": "Bratislava",
+    "tz": "Europe/Bratislava",
+    "continent": "Europe"
+  },
+  {
+    "name": "New York",
+    "tz": "America/New_York",
+    "continent": "North America"
+  },
+  {
+    "name": "Los Angeles",
+    "tz": "America/Los_Angeles",
+    "continent": "North America"
+  },
+  {
+    "name": "Chicago",
+    "tz": "America/Chicago",
+    "continent": "North America"
+  },
+  {
+    "name": "Toronto",
+    "tz": "America/Toronto",
+    "continent": "North America"
+  },
+  {
+    "name": "Vancouver",
+    "tz": "America/Vancouver",
+    "continent": "North America"
+  },
+  {
+    "name": "Mexico City",
+    "tz": "America/Mexico_City",
+    "continent": "North America"
+  },
+  {
+    "name": "Miami",
+    "tz": "America/New_York",
+    "continent": "North America"
+  },
+  {
+    "name": "Houston",
+    "tz": "America/Chicago",
+    "continent": "North America"
+  },
+  {
+    "name": "Phoenix",
+    "tz": "America/Phoenix",
+    "continent": "North America"
+  },
+  {
+    "name": "Philadelphia",
+    "tz": "America/New_York",
+    "continent": "North America"
+  },
+  {
+    "name": "San Antonio",
+    "tz": "America/Chicago",
+    "continent": "North America"
+  },
+  {
+    "name": "San Diego",
+    "tz": "America/Los_Angeles",
+    "continent": "North America"
+  },
+  {
+    "name": "Dallas",
+    "tz": "America/Chicago",
+    "continent": "North America"
+  },
+  {
+    "name": "San Jose",
+    "tz": "America/Los_Angeles",
+    "continent": "North America"
+  },
+  {
+    "name": "Austin",
+    "tz": "America/Chicago",
+    "continent": "North America"
+  },
+  {
+    "name": "Seattle",
+    "tz": "America/Los_Angeles",
+    "continent": "North America"
+  },
+  {
+    "name": "Denver",
+    "tz": "America/Denver",
+    "continent": "North America"
+  },
+  {
+    "name": "Boston",
+    "tz": "America/New_York",
+    "continent": "North America"
+  },
+  {
+    "name": "Montreal",
+    "tz": "America/Toronto",
+    "continent": "North America"
+  },
+  {
+    "name": "Calgary",
+    "tz": "America/Edmonton",
+    "continent": "North America"
+  },
+  {
+    "name": "Sao Paulo",
+    "tz": "America/Sao_Paulo",
+    "continent": "South America"
+  },
+  {
+    "name": "Buenos Aires",
+    "tz": "America/Argentina/Buenos_Aires",
+    "continent": "South America"
+  },
+  {
+    "name": "Lima",
+    "tz": "America/Lima",
+    "continent": "South America"
+  },
+  {
+    "name": "Bogota",
+    "tz": "America/Bogota",
+    "continent": "South America"
+  },
+  {
+    "name": "Santiago",
+    "tz": "America/Santiago",
+    "continent": "South America"
+  },
+  {
+    "name": "Caracas",
+    "tz": "America/Caracas",
+    "continent": "South America"
+  },
+  {
+    "name": "Quito",
+    "tz": "America/Guayaquil",
+    "continent": "South America"
+  },
+  {
+    "name": "La Paz",
+    "tz": "America/La_Paz",
+    "continent": "South America"
+  },
+  {
+    "name": "Asuncion",
+    "tz": "America/Asuncion",
+    "continent": "South America"
+  },
+  {
+    "name": "Montevideo",
+    "tz": "America/Montevideo",
+    "continent": "South America"
+  },
+  {
+    "name": "Mumbai",
+    "tz": "Asia/Kolkata",
+    "continent": "Asia"
+  },
+  {
+    "name": "Delhi",
+    "tz": "Asia/Kolkata",
+    "continent": "Asia"
+  },
+  {
+    "name": "Tokyo",
+    "tz": "Asia/Tokyo",
+    "continent": "Asia"
+  },
+  {
+    "name": "Beijing",
+    "tz": "Asia/Shanghai",
+    "continent": "Asia"
+  },
+  {
+    "name": "Shanghai",
+    "tz": "Asia/Shanghai",
+    "continent": "Asia"
+  },
+  {
+    "name": "Singapore",
+    "tz": "Asia/Singapore",
+    "continent": "Asia"
+  },
+  {
+    "name": "Dubai",
+    "tz": "Asia/Dubai",
+    "continent": "Asia"
+  },
+  {
+    "name": "Seoul",
+    "tz": "Asia/Seoul",
+    "continent": "Asia"
+  },
+  {
+    "name": "Bangkok",
+    "tz": "Asia/Bangkok",
+    "continent": "Asia"
+  },
+  {
+    "name": "Karachi",
+    "tz": "Asia/Karachi",
+    "continent": "Asia"
+  },
+  {
+    "name": "Riyadh",
+    "tz": "Asia/Riyadh",
+    "continent": "Asia"
+  },
+  {
+    "name": "Dhaka",
+    "tz": "Asia/Dhaka",
+    "continent": "Asia"
+  },
+  {
+    "name": "Lahore",
+    "tz": "Asia/Karachi",
+    "continent": "Asia"
+  },
+  {
+    "name": "Kolkata",
+    "tz": "Asia/Kolkata",
+    "continent": "Asia"
+  },
+  {
+    "name": "Chennai",
+    "tz": "Asia/Kolkata",
+    "continent": "Asia"
+  },
+  {
+    "name": "Bangalore",
+    "tz": "Asia/Kolkata",
+    "continent": "Asia"
+  },
+  {
+    "name": "Hyderabad",
+    "tz": "Asia/Kolkata",
+    "continent": "Asia"
+  },
+  {
+    "name": "Ahmedabad",
+    "tz": "Asia/Kolkata",
+    "continent": "Asia"
+  },
+  {
+    "name": "Osaka",
+    "tz": "Asia/Tokyo",
+    "continent": "Asia"
+  },
+  {
+    "name": "Nagoya",
+    "tz": "Asia/Tokyo",
+    "continent": "Asia"
+  },
+  {
+    "name": "Sapporo",
+    "tz": "Asia/Tokyo",
+    "continent": "Asia"
+  },
+  {
+    "name": "Guangzhou",
+    "tz": "Asia/Shanghai",
+    "continent": "Asia"
+  },
+  {
+    "name": "Shenzhen",
+    "tz": "Asia/Shanghai",
+    "continent": "Asia"
+  },
+  {
+    "name": "Chengdu",
+    "tz": "Asia/Shanghai",
+    "continent": "Asia"
+  },
+  {
+    "name": "Wuhan",
+    "tz": "Asia/Shanghai",
+    "continent": "Asia"
+  },
+  {
+    "name": "Tianjin",
+    "tz": "Asia/Shanghai",
+    "continent": "Asia"
+  },
+  {
+    "name": "Taipei",
+    "tz": "Asia/Taipei",
+    "continent": "Asia"
+  },
+  {
+    "name": "Kuala Lumpur",
+    "tz": "Asia/Kuala_Lumpur",
+    "continent": "Asia"
+  },
+  {
+    "name": "Jakarta",
+    "tz": "Asia/Jakarta",
+    "continent": "Asia"
+  },
+  {
+    "name": "Manila",
+    "tz": "Asia/Manila",
+    "continent": "Asia"
+  },
+  {
+    "name": "Ho Chi Minh City",
+    "tz": "Asia/Ho_Chi_Minh",
+    "continent": "Asia"
+  },
+  {
+    "name": "Hanoi",
+    "tz": "Asia/Bangkok",
+    "continent": "Asia"
+  },
+  {
+    "name": "Yangon",
+    "tz": "Asia/Rangoon",
+    "continent": "Asia"
+  },
+  {
+    "name": "Colombo",
+    "tz": "Asia/Colombo",
+    "continent": "Asia"
+  },
+  {
+    "name": "Kathmandu",
+    "tz": "Asia/Kathmandu",
+    "continent": "Asia"
+  },
+  {
+    "name": "Kabul",
+    "tz": "Asia/Kabul",
+    "continent": "Asia"
+  },
+  {
+    "name": "Tehran",
+    "tz": "Asia/Tehran",
+    "continent": "Asia"
+  },
+  {
+    "name": "Baghdad",
+    "tz": "Asia/Baghdad",
+    "continent": "Asia"
+  },
+  {
+    "name": "Kuwait City",
+    "tz": "Asia/Kuwait",
+    "continent": "Asia"
+  },
+  {
+    "name": "Doha",
+    "tz": "Asia/Qatar",
+    "continent": "Asia"
+  },
+  {
+    "name": "Abu Dhabi",
+    "tz": "Asia/Dubai",
+    "continent": "Asia"
+  },
+  {
+    "name": "Muscat",
+    "tz": "Asia/Muscat",
+    "continent": "Asia"
+  },
+  {
+    "name": "Amman",
+    "tz": "Asia/Amman",
+    "continent": "Asia"
+  },
+  {
+    "name": "Beirut",
+    "tz": "Asia/Beirut",
+    "continent": "Asia"
+  },
+  {
+    "name": "Tel Aviv",
+    "tz": "Asia/Jerusalem",
+    "continent": "Asia"
+  },
+  {
+    "name": "Tashkent",
+    "tz": "Asia/Tashkent",
+    "continent": "Asia"
+  },
+  {
+    "name": "Almaty",
+    "tz": "Asia/Almaty",
+    "continent": "Asia"
+  },
+  {
+    "name": "Baku",
+    "tz": "Asia/Baku",
+    "continent": "Asia"
+  },
+  {
+    "name": "Tbilisi",
+    "tz": "Asia/Tbilisi",
+    "continent": "Asia"
+  },
+  {
+    "name": "Yerevan",
+    "tz": "Asia/Yerevan",
+    "continent": "Asia"
+  },
+  {
+    "name": "Cairo",
+    "tz": "Africa/Cairo",
+    "continent": "Africa"
+  },
+  {
+    "name": "Lagos",
+    "tz": "Africa/Lagos",
+    "continent": "Africa"
+  },
+  {
+    "name": "Nairobi",
+    "tz": "Africa/Nairobi",
+    "continent": "Africa"
+  },
+  {
+    "name": "Johannesburg",
+    "tz": "Africa/Johannesburg",
+    "continent": "Africa"
+  },
+  {
+    "name": "Casablanca",
+    "tz": "Africa/Casablanca",
+    "continent": "Africa"
+  },
+  {
+    "name": "Accra",
+    "tz": "Africa/Accra",
+    "continent": "Africa"
+  },
+  {
+    "name": "Addis Ababa",
+    "tz": "Africa/Addis_Ababa",
+    "continent": "Africa"
+  },
+  {
+    "name": "Dar es Salaam",
+    "tz": "Africa/Dar_es_Salaam",
+    "continent": "Africa"
+  },
+  {
+    "name": "Khartoum",
+    "tz": "Africa/Khartoum",
+    "continent": "Africa"
+  },
+  {
+    "name": "Algiers",
+    "tz": "Africa/Algiers",
+    "continent": "Africa"
+  },
+  {
+    "name": "Dakar",
+    "tz": "Africa/Dakar",
+    "continent": "Africa"
+  },
+  {
+    "name": "Tunis",
+    "tz": "Africa/Tunis",
+    "continent": "Africa"
+  },
+  {
+    "name": "Tripoli",
+    "tz": "Africa/Tripoli",
+    "continent": "Africa"
+  },
+  {
+    "name": "Abidjan",
+    "tz": "Africa/Abidjan",
+    "continent": "Africa"
+  },
+  {
+    "name": "Kampala",
+    "tz": "Africa/Kampala",
+    "continent": "Africa"
+  },
+  {
+    "name": "Lusaka",
+    "tz": "Africa/Lusaka",
+    "continent": "Africa"
+  },
+  {
+    "name": "Harare",
+    "tz": "Africa/Harare",
+    "continent": "Africa"
+  },
+  {
+    "name": "Maputo",
+    "tz": "Africa/Maputo",
+    "continent": "Africa"
+  },
+  {
+    "name": "Antananarivo",
+    "tz": "Indian/Antananarivo",
+    "continent": "Africa"
+  },
+  {
+    "name": "Sydney",
+    "tz": "Australia/Sydney",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Melbourne",
+    "tz": "Australia/Melbourne",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Auckland",
+    "tz": "Pacific/Auckland",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Brisbane",
+    "tz": "Australia/Brisbane",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Perth",
+    "tz": "Australia/Perth",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Adelaide",
+    "tz": "Australia/Adelaide",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Canberra",
+    "tz": "Australia/Sydney",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Wellington",
+    "tz": "Pacific/Auckland",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Suva",
+    "tz": "Pacific/Fiji",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Port Moresby",
+    "tz": "Pacific/Port_Moresby",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Kinshasa",
+    "tz": "Africa/Kinshasa",
+    "continent": "Africa"
+  },
+  {
+    "name": "Kigali",
+    "tz": "Africa/Kigali",
+    "continent": "Africa"
+  },
+  {
+    "name": "Lome",
+    "tz": "Africa/Lome",
+    "continent": "Africa"
+  },
+  {
+    "name": "Niamey",
+    "tz": "Africa/Niamey",
+    "continent": "Africa"
+  },
+  {
+    "name": "Ndjamena",
+    "tz": "Africa/Ndjamena",
+    "continent": "Africa"
+  },
+  {
+    "name": "Libreville",
+    "tz": "Africa/Libreville",
+    "continent": "Africa"
+  },
+  {
+    "name": "Reykjavik",
+    "tz": "Atlantic/Reykjavik",
+    "continent": "Europe"
+  },
+  {
+    "name": "Minsk",
+    "tz": "Europe/Minsk",
+    "continent": "Europe"
+  },
+  {
+    "name": "Chisinau",
+    "tz": "Europe/Chisinau",
+    "continent": "Europe"
+  },
+  {
+    "name": "Tirana",
+    "tz": "Europe/Tirane",
+    "continent": "Europe"
+  },
+  {
+    "name": "Skopje",
+    "tz": "Europe/Skopje",
+    "continent": "Europe"
+  },
+  {
+    "name": "Sarajevo",
+    "tz": "Europe/Sarajevo",
+    "continent": "Europe"
+  },
+  {
+    "name": "Podgorica",
+    "tz": "Europe/Podgorica",
+    "continent": "Europe"
+  },
+  {
+    "name": "Pristina",
+    "tz": "Europe/Belgrade",
+    "continent": "Europe"
+  },
+  {
+    "name": "Luxembourg",
+    "tz": "Europe/Luxembourg",
+    "continent": "Europe"
+  },
+  {
+    "name": "Valletta",
+    "tz": "Europe/Malta",
+    "continent": "Europe"
+  },
+  {
+    "name": "Nicosia",
+    "tz": "Asia/Nicosia",
+    "continent": "Europe"
+  },
+  {
+    "name": "Windhoek",
+    "tz": "Africa/Windhoek",
+    "continent": "Africa"
+  },
+  {
+    "name": "Gaborone",
+    "tz": "Africa/Gaborone",
+    "continent": "Africa"
+  },
+  {
+    "name": "Lilongwe",
+    "tz": "Africa/Blantyre",
+    "continent": "Africa"
+  },
+  {
+    "name": "Freetown",
+    "tz": "Africa/Freetown",
+    "continent": "Africa"
+  }
 ]
