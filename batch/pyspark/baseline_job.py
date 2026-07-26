@@ -1,6 +1,9 @@
 import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import hour, mean, stddev, col, to_timestamp
+from pyspark.sql.functions import (
+    hour, mean, stddev, col, to_timestamp,
+    explode, arrays_zip, input_file_name, regexp_extract
+)
 
 S3_BUCKET = sys.argv[1] if len(sys.argv) > 1 else "weather-anomaly-ca-2026"
 
@@ -10,51 +13,48 @@ spark = SparkSession.builder \
 
 spark.sparkContext.setLogLevel("WARN")
 
-input_path  = f"s3://{S3_BUCKET}/historical/*.json"
+input_path  = f"s3://{S3_BUCKET}/historical/"
 output_path = f"s3://{S3_BUCKET}/baselines/"
 
 print(f"Reading from : {input_path}")
-print(f"Writing to  : {output_path}")
+print(f"Writing to   : {output_path}")
 
-df = spark.read \
+raw = spark.read \
     .option("multiline", "true") \
+    .option("recursiveFileLookup", "true") \
     .json(input_path)
 
-hourly = df.select(
-    col("latitude"),
-    col("longitude"),
-    col("hourly.time").alias("times"),
-    col("hourly.temperature_2m").alias("temps"),
-    col("hourly.wind_speed_10m").alias("winds"),
-    col("hourly.relative_humidity_2m").alias("humidity"),
-    col("hourly.precipitation").alias("precipitation"),
-    col("hourly.weather_code").alias("weather_code")
+raw = raw.withColumn("source_file", input_file_name())
+raw = raw.withColumn(
+    "city_name",
+    regexp_extract(col("source_file"), r"/([^/]+)_\d{4}\.json$", 1)
 )
 
-from pyspark.sql.functions import arrays_zip, explode
-
-exploded = hourly.select(
-    "latitude",
-    "longitude",
+exploded = raw.select(
+    col("city_name"),
     explode(
-        arrays_zip("times", "temps", "winds", "humidity", "precipitation", "weather_code")
+        arrays_zip(
+            col("hourly.time").alias("times"),
+            col("hourly.temperature_2m").alias("temps"),
+            col("hourly.wind_speed_10m").alias("winds"),
+            col("hourly.relative_humidity_2m").alias("humidity"),
+            col("hourly.precipitation").alias("precipitation")
+        )
     ).alias("data")
 ).select(
-    "latitude",
-    "longitude",
+    col("city_name"),
     col("data.times").alias("timestamp"),
     col("data.temps").alias("temperature_2m"),
     col("data.winds").alias("wind_speed_10m"),
     col("data.humidity").alias("relative_humidity_2m"),
-    col("data.precipitation").alias("precipitation"),
-    col("data.weather_code").alias("weather_code")
+    col("data.precipitation").alias("precipitation")
 )
 
 exploded = exploded.withColumn(
     "hour_of_day", hour(to_timestamp(col("timestamp")))
-)
+).filter(col("city_name") != "")
 
-baseline = exploded.groupBy("latitude", "longitude", "hour_of_day") \
+baseline = exploded.groupBy("city_name", "hour_of_day") \
     .agg(
         mean("temperature_2m").alias("temp_mean"),
         stddev("temperature_2m").alias("temp_std"),
@@ -70,4 +70,5 @@ baseline.write \
 
 count = baseline.count()
 print(f"Baseline records written: {count}")
+baseline.show(5)
 spark.stop()
