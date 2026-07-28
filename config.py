@@ -9,9 +9,9 @@ S3_HISTORICAL_PREFIX = "historical"
 S3_BASELINES_PREFIX  = "baselines"
 S3_SERVING_PREFIX    = "serving"
 
-POLL_INTERVAL_SECONDS = 900
-CITY_POLL_DELAY       = 2
-PAST_DAYS             = 1
+POLL_INTERVAL_SECONDS = 90   # start a new full cycle every 1 and half minute
+CITY_POLL_DELAY = 0.5        # 0.5 seconds between city calls
+PAST_DAYS = 1
 
 ANOMALY_Z_THRESHOLD   = 3.0
 
