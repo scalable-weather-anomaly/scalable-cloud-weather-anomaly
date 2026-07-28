@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config import *
 from utils.geocoder import load_cities
-from producer.producer import fetch_weather, push_to_kinesis, save_to_s3
+from speed.producer.producer import fetch_weather, push_to_kinesis, save_to_s3
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cities_file = os.path.join(base_dir, "data/cities/cities.json")
