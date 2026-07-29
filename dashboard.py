@@ -3,11 +3,8 @@ import boto3
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import json
-import time
 import os
 from datetime import datetime, timezone
-from decimal import Decimal
 
 st.set_page_config(
     page_title="Weather Anomaly Detection",
@@ -18,13 +15,6 @@ st.set_page_config(
 st.markdown("""
 <style>
     .block-container { padding-top: 1.5rem; }
-    .metric-card {
-        background: #1c1f26;
-        border: 1px solid #2d3139;
-        border-radius: 8px;
-        padding: 1.2rem;
-        text-align: center;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -39,7 +29,6 @@ def get_aws():
 
 aws = get_aws()
 
-
 def load_alerts():
     tbl  = aws["dynamodb"].Table("weather_alerts")
     resp = tbl.scan()
@@ -48,13 +37,21 @@ def load_alerts():
         return pd.DataFrame()
     rows = []
     for item in items:
+        alert_type = item.get("alert_type", item.get("metric", "N/A"))
+        z          = float(item.get("z_score", 0))
+        if "temperature" in str(alert_type).lower() or "hot" in str(alert_type).lower():
+            category = "HOT" if z > 0 else "COLD"
+        elif "cold" in str(alert_type).lower():
+            category = "COLD"
+        else:
+            category = "HOT" if z > 0 else "COLD"
         rows.append({
             "city":         item.get("city_name", ""),
             "timestamp":    item.get("timestamp", ""),
-            "z_score":      float(item.get("z_score", 0)),
+            "z_score":      z,
             "current_temp": float(item.get("current_temp", 0)),
             "baseline_temp":float(item.get("baseline_temp", 0)),
-            "alert_type":   item.get("alert_type", item.get("metric", "N/A")),
+            "alert_type":   category,
             "detected_at":  item.get("detected_at", ""),
         })
     return pd.DataFrame(rows).sort_values("z_score", key=abs, ascending=False)
@@ -97,12 +94,12 @@ st.caption("Lambda Architecture  |  Kinesis + EMR + Lambda + Athena  |  NCI MSc 
 alerts_df    = load_alerts()
 baselines_df = load_baselines_sample()
 
-col1, col2, col3, col4 = st.columns(4)
 total_alerts     = len(alerts_df)
-hot_alerts       = len(alerts_df[alerts_df["alert_type"].str.contains("HOT|TEMPERATURE|temperature", na=False)]) if not alerts_df.empty else 0
-cold_alerts      = total_alerts - hot_alerts
+hot_alerts       = len(alerts_df[alerts_df["alert_type"] == "HOT"])  if not alerts_df.empty else 0
+cold_alerts      = len(alerts_df[alerts_df["alert_type"] == "COLD"]) if not alerts_df.empty else 0
 cities_monitored = baselines_df["city"].nunique() if not baselines_df.empty else 0
 
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.metric("Total Alerts", total_alerts, delta="live")
 with col2:
@@ -119,8 +116,9 @@ tab1, tab2, tab3, tab4 = st.tabs(["🗺️ Anomaly Map", "📋 Live Alerts", "�
 with tab1:
     st.subheader("City Anomaly Map")
     if not alerts_df.empty:
+        latest   = alerts_df.drop_duplicates("city")
         map_data = []
-        for _, row in alerts_df.iterrows():
+        for _, row in latest.iterrows():
             coords = CITY_COORDS.get(row["city"])
             if coords:
                 map_data.append({
@@ -137,44 +135,45 @@ with tab1:
             fig = px.scatter_geo(
                 map_df,
                 lat="lat", lon="lon",
-                color="z",
+                color="type",
                 size="z",
                 hover_name="city",
-                hover_data={"temp": ":.1f", "baseline": ":.1f", "type": True, "lat": False, "lon": False},
-                color_continuous_scale="RdYlGn_r",
+                hover_data={"temp": ":.1f", "baseline": ":.1f",
+                            "z": ":.2f", "lat": False, "lon": False},
+                color_discrete_map={"HOT": "#ff4b4b", "COLD": "#4b9eff"},
                 size_max=30,
                 projection="natural earth",
-                title="Cities with Weather Anomalies"
+                title="Cities with Weather Anomalies (red = hot, blue = cold)"
             )
             fig.update_layout(
-                paper_bgcolor="#0f1117",
-                plot_bgcolor="#0f1117",
-                font_color="white",
+                paper_bgcolor="#0f1117", plot_bgcolor="#0f1117", font_color="white",
                 geo=dict(bgcolor="#0f1117", showland=True, landcolor="#1c1f26",
                          showocean=True, oceancolor="#0d1117",
                          showcoastlines=True, coastlinecolor="#2d3139")
             )
             st.plotly_chart(fig, use_container_width=True)
+            st.caption(f"Showing {len(map_data)} unique cities with anomalies")
         else:
-            st.info("No coordinate data available for current alerts")
+            st.info("City coordinates not found for current alerts")
     else:
         st.info("No alerts in DynamoDB yet")
 
 with tab2:
-    st.subheader("Live Anomaly Alerts from DynamoDB")
+    st.subheader("All Anomaly Alerts from DynamoDB")
     if not alerts_df.empty:
         display = alerts_df.copy()
         display["z_score"]   = display["z_score"].round(2)
         display["temp_diff"] = (display["current_temp"] - display["baseline_temp"]).round(1)
         st.dataframe(display, use_container_width=True, hide_index=True)
 
-        fig2 = px.bar(
-            alerts_df.sort_values("z_score", key=abs, ascending=True),
+        unique = alerts_df.drop_duplicates("city")
+        fig2   = px.bar(
+            unique.sort_values("z_score", key=abs, ascending=True),
             x="z_score", y="city", orientation="h",
-            color="z_score",
-            color_continuous_scale="RdBu_r",
+            color="alert_type",
+            color_discrete_map={"HOT": "#ff4b4b", "COLD": "#4b9eff"},
             labels={"z_score": "Z-Score", "city": "City"},
-            title="Anomaly Severity per City"
+            title="Anomaly Severity per City (latest reading)"
         )
         fig2.add_vline(x=3.0,  line_dash="dash", line_color="red",  annotation_text="+3σ")
         fig2.add_vline(x=-3.0, line_dash="dash", line_color="blue", annotation_text="-3σ")
@@ -184,7 +183,7 @@ with tab2:
         st.info("No alerts yet")
 
 with tab3:
-    st.subheader("Batch Layer — City Baselines")
+    st.subheader("Batch Layer — City Baselines from DynamoDB")
     if not baselines_df.empty:
         cities   = sorted(baselines_df["city"].unique())
         selected = st.selectbox("Select city", cities)
@@ -199,26 +198,31 @@ with tab3:
         fig3.add_trace(go.Scatter(
             x=city_df["hour"],
             y=city_df["temp_mean"] + 3 * city_df["temp_std"],
-            name="+3σ threshold", mode="lines",
+            name="+3σ", mode="lines",
             line=dict(color="#ff4b4b", dash="dash", width=1)
         ))
         fig3.add_trace(go.Scatter(
             x=city_df["hour"],
             y=city_df["temp_mean"] - 3 * city_df["temp_std"],
-            name="-3σ threshold", mode="lines",
+            name="-3σ", mode="lines",
             line=dict(color="#4b9eff", dash="dash", width=1),
             fill="tonexty", fillcolor="rgba(255,75,75,0.05)"
         ))
         fig3.update_layout(
-            title=f"{selected} — Hourly Temperature Baseline",
-            xaxis_title="Hour of Day",
-            yaxis_title="Temperature (°C)",
-            paper_bgcolor="#0f1117",
-            plot_bgcolor="#1c1f26",
-            font_color="white",
+            title=f"{selected} — Hourly Temperature Baseline (2020–2025)",
+            xaxis_title="Hour of Day", yaxis_title="Temperature (°C)",
+            paper_bgcolor="#0f1117", plot_bgcolor="#1c1f26", font_color="white",
             xaxis=dict(tickmode="linear", tick0=0, dtick=2)
         )
         st.plotly_chart(fig3, use_container_width=True)
+
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.metric("Coldest hour",  f"{city_df.loc[city_df['temp_mean'].idxmin(), 'hour']:02d}:00")
+        with c2:
+            st.metric("Warmest hour",  f"{city_df.loc[city_df['temp_mean'].idxmax(), 'hour']:02d}:00")
+        with c3:
+            st.metric("Avg wind mean", f"{city_df['wind_mean'].mean():.1f} km/h")
     else:
         st.info("No baseline data loaded")
 
@@ -229,32 +233,40 @@ with tab4:
     with col_l:
         st.markdown("**Batch Layer — EMR Speedup**")
         if os.path.exists("benchmarks/graphs/speedup_graph.png"):
-            st.image("benchmarks/graphs/speedup_graph.png", use_column_width=True)
+            st.image("benchmarks/graphs/speedup_graph.png", use_container_width=True)
         else:
             st.info("speedup_graph.png not found")
 
     with col_r:
         st.markdown("**Sequential vs Parallel Producer**")
         if os.path.exists("benchmarks/graphs/sequential_vs_parallel.png"):
-            st.image("benchmarks/graphs/sequential_vs_parallel.png", use_column_width=True)
+            st.image("benchmarks/graphs/sequential_vs_parallel.png", use_container_width=True)
         else:
             st.info("sequential_vs_parallel.png not found")
 
-    if os.path.exists("benchmarks/results/latency_benchmark.csv"):
+    latency_csv = "benchmarks/results/latency_benchmark.csv"
+    if os.path.exists(latency_csv):
         st.subheader("Speed Layer — Latency Benchmark")
-        df = pd.read_csv("benchmarks/results/latency_benchmark.csv")
-        df = df[df["latency_ms"] > 0]
-        if not df.empty:
+        df    = pd.read_csv(latency_csv)
+        valid = df[df["latency_ms"] > 0].copy()
+        if not valid.empty:
+            valid["latency_s"] = (valid["latency_ms"] / 1000).round(1)
             fig4 = px.bar(
-                df, x="rate", y="latency_ms", color="city",
-                title="Kinesis to DynamoDB Latency by Load Rate",
-                labels={"latency_ms": "Latency (ms)", "rate": "Load Rate"}
+                valid, x="rate", y="latency_s", color="city",
+                barmode="group",
+                title="Kinesis → Lambda → DynamoDB Latency (seconds)",
+                labels={"latency_s": "Latency (seconds)", "rate": "Load Rate"}
             )
+            fig4.add_hline(y=300, line_dash="dash", line_color="orange",
+                           annotation_text="Lambda batch window (300s)")
             fig4.update_layout(paper_bgcolor="#0f1117", plot_bgcolor="#1c1f26", font_color="white")
             st.plotly_chart(fig4, use_container_width=True)
-            st.dataframe(df, hide_index=True)
+
+            summary = valid.groupby("rate")["latency_s"].agg(["mean","min","max"]).round(1)
+            summary.columns = ["Avg (s)", "Min (s)", "Max (s)"]
+            st.dataframe(summary, use_container_width=True)
     else:
         st.info("Run speed/tests/latency_test.py to generate latency data")
 
 st.divider()
-st.caption(f"Last refreshed: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC  |  Rishabh Raghav X25106112  |  Ayush Singh X25129180")
+st.caption(f"Refreshed: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC  |  Rishabh X25106112  |  Ayush X25129180")
