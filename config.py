@@ -12,7 +12,10 @@ S3_SERVING_PREFIX    = "serving"
 POLL_INTERVAL_SECONDS = 90   # start a new full cycle every 1 and half minute
 CITY_POLL_DELAY = 0.5        # 0.5 seconds between city calls
 PAST_DAYS = 1
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 ANOMALY_Z_THRESHOLD   = 3.0
 
 OPENMETEO_BASE_URL    = "https://api.open-meteo.com/v1/forecast"
