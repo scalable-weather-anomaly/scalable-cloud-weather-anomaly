@@ -268,5 +268,71 @@ with tab4:
     else:
         st.info("Run speed/tests/latency_test.py to generate latency data")
 
+
+    st.subheader("Serving Layer — Athena Merge Query")
+    st.caption("Joins S3 raw weather records with DynamoDB baselines to show current vs normal")
+    if st.button("Run Athena Query"):
+        with st.spinner("Running Athena query..."):
+            query = """
+                SELECT city_name, timestamp, current_temperature,
+                       temp_mean, temp_std, temperature_z_score, anomaly_status
+                FROM weatheranalytics.current_weather_anomalies
+                ORDER BY abs(temperature_z_score) DESC
+                LIMIT 20
+            """
+            df = run_athena(query)
+            if not df.empty:
+                df["temperature_z_score"] = pd.to_numeric(df["temperature_z_score"], errors="coerce").round(2)
+                df["current_temperature"]  = pd.to_numeric(df["current_temperature"],  errors="coerce").round(1)
+                df["temp_mean"]            = pd.to_numeric(df["temp_mean"],            errors="coerce").round(1)
+                st.dataframe(df, use_container_width=True, hide_index=True)
+                anomalies = df[df["anomaly_status"] != "NORMAL"]
+                if not anomalies.empty:
+                    fig5 = px.bar(
+                        anomalies,
+                        x="city_name", y="temperature_z_score",
+                        color="anomaly_status",
+                        color_discrete_map={"TEMPERATURE_ANOMALY": "#ff4b4b", "WIND_ANOMALY": "#ffa500"},
+                        title="Athena Serving View — Anomalies by City",
+                        labels={"temperature_z_score": "Z-Score", "city_name": "City"}
+                    )
+                    fig5.add_hline(y=3.0,  line_dash="dash", line_color="red")
+                    fig5.add_hline(y=-3.0, line_dash="dash", line_color="blue")
+                    fig5.update_layout(paper_bgcolor="#0f1117", plot_bgcolor="#1c1f26", font_color="white")
+                    st.plotly_chart(fig5, use_container_width=True)
+                    st.success(f"{len(anomalies)} anomalies detected by Athena serving layer")
+            else:
+                st.warning("No results — check Athena tables are created in weatheranalytics database")
+
 st.divider()
 st.caption(f"Refreshed: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC  |  Rishabh X25106112  |  Ayush X25129180")
+
+
+def run_athena(query):
+    try:
+        athena = aws["athena"]
+        resp   = athena.start_query_execution(
+            QueryString=query,
+            ResultConfiguration={"OutputLocation": "s3://weather-anomaly-ca-2026/serving/"}
+        )
+        qid = resp["QueryExecutionId"]
+        import time
+        for _ in range(30):
+            status = athena.get_query_execution(QueryExecutionId=qid)
+            state  = status["QueryExecution"]["Status"]["State"]
+            if state == "SUCCEEDED":
+                results  = athena.get_query_results(QueryExecutionId=qid)
+                rows     = results["ResultSet"]["Rows"]
+                if len(rows) < 2:
+                    return pd.DataFrame()
+                headers = [c["VarCharValue"] for c in rows[0]["Data"]]
+                data    = [[c.get("VarCharValue","") for c in r["Data"]] for r in rows[1:]]
+                return pd.DataFrame(data, columns=headers)
+            elif state in ["FAILED","CANCELLED"]:
+                reason = status["QueryExecution"]["Status"].get("StateChangeReason","")
+                st.error(f"Athena query failed: {reason}")
+                return pd.DataFrame()
+            time.sleep(2)
+    except Exception as e:
+        st.error(f"Athena error: {e}")
+    return pd.DataFrame()

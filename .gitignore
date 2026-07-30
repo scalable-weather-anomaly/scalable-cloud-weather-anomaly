@@ -25,3 +25,4 @@ Thumbs.db
 # AWS credentials — never commit
 .aws/
 credentials
+venv/
