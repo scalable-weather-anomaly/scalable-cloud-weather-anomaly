@@ -166,6 +166,26 @@ def load_baselines_via_athena() -> pd.DataFrame:
     return df
 
 
+@st.cache_data(ttl=300)
+def load_total_cities_count() -> int:
+    """
+    Count distinct cities from the raw weather table via Athena.
+    This is used for the 'Cities monitored' KPI so it reflects all 160 cities,
+    not just those present in the filtered serving view.
+    """
+    query = """
+        SELECT COUNT(DISTINCT city_name) AS city_count
+        FROM weatheranalytics.weather_raw
+    """
+    df = _run_athena_query(query)
+    if df.empty or "city_count" not in df.columns:
+        return 0
+    try:
+        return int(df["city_count"].iloc[0])
+    except Exception:
+        return 0
+
+
 # -----------------------------
 # DynamoDB helper (speed layer)
 # -----------------------------
@@ -223,16 +243,21 @@ alerts_df   = load_alerts_from_dynamodb()
 
 
 # -----------------------------
-# KPI metrics (from Athena view)
+# KPI metrics (from Athena view + raw city count)
 # -----------------------------
 if not serving_df.empty:
     anomalies = serving_df[serving_df["anomaly_status"] != "NORMAL"]
     total_serving_alerts = len(anomalies)
     hot_anomalies        = len(anomalies[anomalies["temperature_z_score"] > 0])
     cold_anomalies       = len(anomalies[anomalies["temperature_z_score"] < 0])
-    cities_monitored     = serving_df["city_name"].nunique()
+    cities_monitored_from_view = serving_df["city_name"].nunique()
 else:
-    total_serving_alerts = hot_anomalies = cold_anomalies = cities_monitored = 0
+    total_serving_alerts = hot_anomalies = cold_anomalies = 0
+    cities_monitored_from_view = 0
+
+# Use total distinct cities from raw data for the KPI
+cities_monitored_total = load_total_cities_count()
+cities_monitored = cities_monitored_total if cities_monitored_total > 0 else cities_monitored_from_view
 
 total_speed_alerts = len(alerts_df) if not alerts_df.empty else 0
 
@@ -265,7 +290,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 
 # --- Tab 1: Anomaly map from Athena ---
 with tab1:
-    st.subheader("Serving Layer — Global Anomaly Map (Athena current_weather_anomalies)")
+    st.subheader("Serving Layer — Global Anomaly Map")
 
     if not serving_df.empty:
         # Get latest record per city
@@ -381,7 +406,7 @@ with tab2:
 
 # --- Tab 3: Live speed-layer alerts from DynamoDB ---
 with tab3:
-    st.subheader("Speed Layer — Live Alerts from DynamoDB (weather_alerts)")
+    st.subheader("Speed Layer — Live Alerts")
 
     if not alerts_df.empty:
         display = alerts_df.copy()
